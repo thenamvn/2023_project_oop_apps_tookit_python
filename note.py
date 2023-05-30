@@ -5,15 +5,17 @@ from PyQt5 import QtGui
 import os
 from PyQt5 import QtCore
 from PyQt5.QtCore import Qt
-
+import pygame
+import threading
 
 class GhiChuGUI(QWidget):
     def __init__(self):
         super().__init__()
+        pygame.mixer.init()
         self.setWindowFlag(Qt.FramelessWindowHint)
         self.displayed_events = set()  # Danh sách các sự kiện đã hiển thị thông báo
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        icon_path = os.path.join(current_dir, "resources/icon.png")
+        self.current_dir = os.path.dirname(os.path.abspath(__file__))
+        icon_path = os.path.join(self.current_dir, "resources/icon.png")
         self.icon = QtGui.QIcon(icon_path)
         self.setWindowIcon(self.icon)
 
@@ -130,19 +132,28 @@ class GhiChuGUI(QWidget):
                 message_box = QMessageBox()
                 message_box.setWindowIcon(self.icon)
                 message_box.setIcon(QMessageBox.Information)
-                message_box.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)
-
+                message_box.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)   #set on top khi thông báo (tránh đang chơi game fullscreen ko thấy thông báo)
                 message_box.setWindowTitle("Thông báo")
-                
                 message_box.setStyleSheet(style_sheet);
-                message_box.setText(f"SỰ KIỆN \"{ghi_chu}\" ")
-                message_box.setInformativeText(f"LÚC {ngay_gio} ĐANG DIỄN RA.")
+                message_box.setText(ngay_gio)
+                message_box.setInformativeText(ghi_chu)
                 message_box.setStandardButtons(QMessageBox.Ok)
+                sound_thread = threading.Thread(target=self.play_sound)
+                sound_thread.start()
                 result = message_box.exec_()
                 if result == QMessageBox.Ok:
                     self.xoa_ghi_chu_trong_file(ngay_gio, ghi_chu)
                     self.list_widget.takeItem(index)
+                    self.stop_sound()
 
+
+    def play_sound(self):
+        self.alarm_sound= os.path.join(self.current_dir, "resources/alarm.mp3")
+        pygame.mixer.music.load(self.alarm_sound)
+        pygame.mixer.music.play(-1)
+
+    def stop_sound(self):
+        pygame.mixer.music.stop()
 style_sheet = """
 QWidget {
     background-color: #2b2b2b;
