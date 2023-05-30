@@ -30,10 +30,10 @@ class AppsMenu(QtWidgets.QWidget):
         
         # Calculate the center position of the screen
         desktop = QtWidgets.QApplication.desktop()
-        x = (desktop.width() - self.width) / 2
-        y = (desktop.height() - self.height) / 2
-        self.setGeometry(x, y, self.width, self.height)
-        self.setFixedSize(self.width, self.height)
+        x = int((desktop.width() - self.width) / 2)
+        y = int((desktop.height() - self.height) / 2)
+        self.setGeometry(x, y, int(self.width), int(self.height))
+        self.setFixedSize(int(self.width), int(self.height))
 
         # Create app buttons
         self.app_buttons = []
