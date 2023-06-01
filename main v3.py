@@ -5,11 +5,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from note import GhiChuGUI
 import shutil
 import win32com.client
-import win32gui
-import win32gui
-import win32con
-import win32api
-import win32ui
+
 
 class AppsMenu(QtWidgets.QWidget):
     def __init__(self):
@@ -18,21 +14,19 @@ class AppsMenu(QtWidgets.QWidget):
         desktop = QtWidgets.QApplication.desktop()
         # Set window properties
         self.title = 'Apps Menu'
-        self.width = desktop.width() / 3 *2
-        self.height = desktop.height() /3*2
+        self.width = int(desktop.width() / 3 *2)
+        self.height = int(desktop.height() /3*2)
 
         # Get the path of the menu folder
         current_dir = os.path.dirname(os.path.abspath(__file__))
         self.apps_folder = os.path.join(current_dir, "menu")
         icon_path = os.path.join(current_dir, "resources/icon.png")
         self.icon = QtGui.QIcon(icon_path)
-        self.setWindowIcon(self.icon)
         
         # Calculate the center position of the screen
         x = int((desktop.width() - self.width) / 2)
         y = int((desktop.height() - self.height) / 2)
-        self.setGeometry(x, y, int(self.width), int(self.height))
-        self.setFixedSize(int(self.width), int(self.height))
+        
 
         # Create app buttons
         self.app_buttons = []
@@ -40,7 +34,7 @@ class AppsMenu(QtWidgets.QWidget):
 
         # Create the search input
         self.search_input = QtWidgets.QLineEdit()
-        self.search_input.setFixedWidth(200)
+        self.search_input.setFixedWidth(int(self.width/5))
         self.search_input.setPlaceholderText("Tìm kiếm...")
         self.search_input.textChanged.connect(self.filter_apps)
 
@@ -111,7 +105,8 @@ class AppsMenu(QtWidgets.QWidget):
         self.layout().setMenuBar(menu_bar)
 
         self.setWindowTitle(self.title)
-        self.setGeometry(x, y, self.width, self.height)
+        self.setGeometry(x, y,self.width,self.height)
+        self.setWindowIcon(self.icon)
         self.setStyleSheet(stylesheet)
         self.show()
         app.setStyle("Fusion")
@@ -163,8 +158,7 @@ class AppsMenu(QtWidgets.QWidget):
     def getIcon(self, exe_path):
         file_info = QtCore.QFileInfo(exe_path)
         file_icon = QtWidgets.QFileIconProvider().icon(file_info)
-        icon_size = QtCore.QSize(int(self.width / 9 - 75), int(self.width / 9 - 75))
-        icon = QtGui.QIcon(file_icon.pixmap(icon_size))
+        icon = QtGui.QIcon(file_icon.pixmap(32,32))
         return icon
 
     def filter_apps(self):
