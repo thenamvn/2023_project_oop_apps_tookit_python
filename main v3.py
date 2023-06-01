@@ -63,7 +63,7 @@ class AppsMenu(QtWidgets.QWidget):
         menu.addAction(run_optimizer_action)
 
         # Add "Ghi Chú" item
-        note_program = QtWidgets.QAction("Ghi Chú", self)
+        note_program = QtWidgets.QAction("Alarm", self)
         note_program.triggered.connect(self.open_ghi_chu)
         menu.addAction(note_program)
 
@@ -71,7 +71,7 @@ class AppsMenu(QtWidgets.QWidget):
         add_app_action = QtWidgets.QAction("Add App", self)
         add_app_action.triggered.connect(self.add_app)
         menu.addAction(add_app_action)
-        rm_app_action = QtWidgets.QAction("Xóa app khỏi menu", self)
+        rm_app_action = QtWidgets.QAction("Remove app from menu", self)
         rm_app_action.triggered.connect(self.rm_menu)
         menu.addAction(rm_app_action)
 
@@ -257,7 +257,6 @@ class AppsMenu(QtWidgets.QWidget):
             subprocess.Popen([python_path] + sys.argv)
             QtWidgets.QApplication.quit()
 
-        # Hide the search input when adding an app
         self.search_input.clear()
 stylesheet = """
 QWidget {
