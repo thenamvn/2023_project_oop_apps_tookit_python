@@ -1,5 +1,17 @@
-OOP Project
+                                                      OOP Project
 
+
+Members: 
+
+  *Nguyễn Thế Nam (leader)
+  
+  *Nguyễn Thái Sơn (member)
+  
+  *Phạm Hồng Thái (member)
+  
+  *Nguyễn Việt Trung (member)
+  
+  
 Includes:
 
 pip install PyQt5
