@@ -18,6 +18,9 @@ pip install PyQt5
 
 pip install pygame
 
+pip install pywin32
+
+
 
 ![image](https://github.com/thenamdev/vju2023_project_oop/assets/57611937/a961768a-dc45-4d49-85d5-c269977270c3)
 
