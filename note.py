@@ -134,7 +134,7 @@ class GhiChuGUI(QWidget):
                 message_box.setIcon(QMessageBox.Information)
                 message_box.setWindowFlags(QtCore.Qt.WindowStaysOnTopHint)   #set on top khi thông báo (tránh đang chơi game fullscreen ko thấy thông báo)
                 message_box.setWindowTitle("Thông báo")
-                message_box.setStyleSheet(style_sheet);
+                message_box.setStyleSheet(style_sheet)
                 message_box.setText(ngay_gio)
                 message_box.setInformativeText(ghi_chu)
                 message_box.setStandardButtons(QMessageBox.Ok)

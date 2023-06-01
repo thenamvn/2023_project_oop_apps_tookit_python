@@ -15,11 +15,11 @@ class AppsMenu(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-
+        desktop = QtWidgets.QApplication.desktop()
         # Set window properties
         self.title = 'Apps Menu'
-        self.width = 826
-        self.height = 517
+        self.width = desktop.width() / 3 *2
+        self.height = desktop.height() /3*2
 
         # Get the path of the menu folder
         current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -29,11 +29,10 @@ class AppsMenu(QtWidgets.QWidget):
         self.setWindowIcon(self.icon)
         
         # Calculate the center position of the screen
-        desktop = QtWidgets.QApplication.desktop()
         x = int((desktop.width() - self.width) / 2)
         y = int((desktop.height() - self.height) / 2)
         self.setGeometry(x, y, int(self.width), int(self.height))
-        self.setFixedSize(self.width,self.height)
+        self.setFixedSize(int(self.width), int(self.height))
 
         # Create app buttons
         self.app_buttons = []
@@ -88,9 +87,9 @@ class AppsMenu(QtWidgets.QWidget):
         spacer = QtWidgets.QSpacerItem(1, 1, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
         right_button_layout.addItem(spacer)
 
-        label1 = QtWidgets.QLabel("Apps Menu")
+        label1 = QtWidgets.QLabel("Apps Toolkit")
         right_button_layout.addWidget(label1)
-        right_button_layout.addSpacing(310)
+        right_button_layout.addSpacing(int(self.width / 2 - 100))
 
         # Create the minimize button
         button2 = QtWidgets.QPushButton("")
@@ -129,7 +128,7 @@ class AppsMenu(QtWidgets.QWidget):
         for app_name in app_names:
             if app_name.endswith(".lnk"):
                 button = QtWidgets.QPushButton()
-                button.setFixedSize(75, 75)
+                button.setFixedSize(int(self.width /9 - 25), int(self.width /9 - 25))
                 button.setToolTip(app_name[:-4])   # Set tooltip for the button
                 button.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
                 button.setIcon(self.getIcon(self.get_target_filepath(os.path.join(self.apps_folder, app_name))))
