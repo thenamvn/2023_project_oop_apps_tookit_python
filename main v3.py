@@ -158,7 +158,7 @@ class AppsMenu(QtWidgets.QWidget):
     def getIcon(self, exe_path):
         file_info = QtCore.QFileInfo(exe_path)
         file_icon = QtWidgets.QFileIconProvider().icon(file_info)
-        icon = QtGui.QIcon(file_icon.pixmap(32,32))
+        icon = QtGui.QIcon(file_icon.pixmap(48,48))
         return icon
 
     def filter_apps(self):
