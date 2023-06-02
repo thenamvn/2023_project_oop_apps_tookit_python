@@ -5,7 +5,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from note import GhiChuGUI
 import shutil
 import win32com.client
-
+from PyQt5.QtCore import QTimer
 
 class AppsMenu(QtWidgets.QWidget):
     def __init__(self):
@@ -109,9 +109,12 @@ class AppsMenu(QtWidgets.QWidget):
         self.setWindowIcon(self.icon)
         self.setStyleSheet(stylesheet)
         self.show()
+        self.timer_main = QTimer()
+        self.ghi_chu_gui = GhiChuGUI()
+        self.timer_main.timeout.connect(self.ghi_chu_gui.kiem_tra_lich_ghi_chu) #check sự kiện hẹn ngay cả khi không bật alarm để tránh lỡ lịch 
+        self.timer_main.start(1000)
         app.setStyle("Fusion")
         app.setPalette(QtGui.QPalette(QtGui.QColor("#2b2b2b")))
-
     def exit_program(self):
         self.close()
 
@@ -258,6 +261,8 @@ class AppsMenu(QtWidgets.QWidget):
             QtWidgets.QApplication.quit()
 
         self.search_input.clear()
+    # set timer check sự kiện ngay cả khi chưa mở alarm mà vẫn đang có sự kiện đang hẹn
+
 stylesheet = """
 QWidget {
     background-color: #2b2b2b;
@@ -290,7 +295,7 @@ QLineEdit {
 QPushButton {
     border: none;
     color: #f2f2f2;
-    background-color: #555555;
+    background-color: transparent;
     border-radius:10px;
 }
 

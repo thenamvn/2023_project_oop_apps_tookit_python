@@ -137,6 +137,7 @@ class GhiChuGUI(QWidget):
                 message_box.setStyleSheet(style_sheet)
                 message_box.setText(ngay_gio)
                 message_box.setInformativeText(ghi_chu)
+                self.displayed_events.add(item_text)        #thêm sự kiện vô danh sách đã hiển thị tránh bị lặp lại thông báo
                 message_box.setStandardButtons(QMessageBox.Ok)
                 sound_thread = threading.Thread(target=self.play_sound)
                 sound_thread.start()
