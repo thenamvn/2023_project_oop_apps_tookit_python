@@ -17,9 +17,13 @@ class AppsMenu(QtWidgets.QWidget):
         self.width = int(desktop.width() / 3 *2)
         self.height = int(desktop.height() /3*2)
 
-        # Get the path of the menu folder
+        # folder menu check
         current_dir = os.path.dirname(os.path.abspath(__file__))
         self.apps_folder = os.path.join(current_dir, "menu")
+        if not os.path.exists(self.apps_folder):
+            os.makedirs(self.apps_folder)
+
+
         icon_path = os.path.join(current_dir, "resources/icon.png")
         self.icon = QtGui.QIcon(icon_path)
         
