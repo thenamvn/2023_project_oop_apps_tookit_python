@@ -221,17 +221,16 @@ class AppsMenu(QtWidgets.QWidget):
                 if os.path.exists(app_path):
                     os.remove(app_path)
                 self.remove_app_button(app_name)
+            # Restart the application to update the app buttons
+            python_path = sys.executable
+            subprocess.Popen([python_path] + sys.argv)
+            QtWidgets.QApplication.quit()
 
     def remove_app_button(self, app_name):
         for button in self.app_buttons:
             if button.toolTip() == app_name:
                 self.app_buttons.remove(button)
                 button.deleteLater()
-        
-                    # Restart the application
-        python_path = sys.executable
-        subprocess.Popen([python_path] + sys.argv)
-        QtWidgets.QApplication.quit()
 
     def update_selected_items(self):
         selected_items = self.sender().selectedItems()
@@ -265,7 +264,6 @@ class AppsMenu(QtWidgets.QWidget):
             QtWidgets.QApplication.quit()
 
         self.search_input.clear()
-    # set timer check sự kiện ngay cả khi chưa mở alarm mà vẫn đang có sự kiện đang hẹn
 
 stylesheet = """
 QWidget {
