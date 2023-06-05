@@ -13,7 +13,7 @@ class AppsMenu(QtWidgets.QWidget):
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         desktop = QtWidgets.QApplication.desktop()
         # Set window properties
-        self.title = 'Apps Menu'
+        self.title = 'Apps Toolkit'
         self.width = int(desktop.width() / 3 *2)
         self.height = int(desktop.height() /3*2)
 
