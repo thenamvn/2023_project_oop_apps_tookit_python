@@ -141,8 +141,7 @@ class AppsMenu(QtWidgets.QWidget):
     def get_target_filepath(self, shortcut_path):
         shell = win32com.client.Dispatch("WScript.Shell")
         shortcut = shell.CreateShortCut(shortcut_path)
-        target_filepath = shortcut.Targetpath
-        return target_filepath
+        return shortcut.Targetpath
 
     def run_app(self):
         sender = self.sender()
@@ -174,7 +173,7 @@ class AppsMenu(QtWidgets.QWidget):
             for button in self.app_buttons:
                 button.show()
         else:
-            for i, button in enumerate(self.app_buttons):
+            for button in self.app_buttons:
                 if search_term.lower() in button.toolTip().lower():
                     button.show()
                 else:
@@ -222,9 +221,7 @@ class AppsMenu(QtWidgets.QWidget):
                     os.remove(app_path)
                 self.remove_app_button(app_name)
             # Restart the application to update the app buttons
-            python_path = sys.executable
-            subprocess.Popen([python_path] + sys.argv)
-            QtWidgets.QApplication.quit()
+            self.apps_restart()
 
     def remove_app_button(self, app_name):
         for button in self.app_buttons:
@@ -257,13 +254,14 @@ class AppsMenu(QtWidgets.QWidget):
                     # Copy the existing shortcut file to the menu folder
                     new_path = os.path.join(self.apps_folder, app_name + ".lnk")
                     shutil.copy(file_path, new_path)
-
             # Restart the application
-            python_path = sys.executable
-            subprocess.Popen([python_path] + sys.argv)
-            QtWidgets.QApplication.quit()
-
+            self.apps_restart()
         self.search_input.clear()
+    
+    def apps_restart(self):
+        python_path = sys.executable
+        subprocess.Popen([python_path] + sys.argv)
+        QtWidgets.QApplication.quit()
 
 stylesheet = """
 QWidget {
