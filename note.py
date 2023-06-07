@@ -23,7 +23,7 @@ class GhiChuGUI(QWidget):
         self.layout = QVBoxLayout()
 
         self.label = QLabel("Lịch sự kiện:")
-        self.label.setStyleSheet(style_sheet);
+        self.label.setStyleSheet(style_sheet)
         self.list_widget = QListWidget()
         self.list_widget.setStyleSheet(style_sheet)
 

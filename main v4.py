@@ -219,15 +219,8 @@ class AppsMenu(QtWidgets.QWidget):
                 app_path = os.path.join(self.apps_folder, app_name + ".lnk")
                 if os.path.exists(app_path):
                     os.remove(app_path)
-                self.remove_app_button(app_name)
             # Restart the application to update the app buttons
             self.apps_restart()
-
-    def remove_app_button(self, app_name):
-        for button in self.app_buttons:
-            if button.toolTip() == app_name:
-                self.app_buttons.remove(button)
-                button.deleteLater()
 
     def update_selected_items(self):
         selected_items = self.sender().selectedItems()
