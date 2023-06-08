@@ -11,6 +11,7 @@ class AppsMenu(QtWidgets.QWidget):
     def __init__(self):
         super().__init__()
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
+        self.drag_position = None
         desktop = QtWidgets.QApplication.desktop()
         # Set window properties
         self.title = 'Apps Toolkit'
@@ -119,6 +120,8 @@ class AppsMenu(QtWidgets.QWidget):
         self.timer_main.start(1000)
         app.setStyle("Fusion")
         app.setPalette(QtGui.QPalette(QtGui.QColor("#2b2b2b")))
+        self.setMouseTracking(True)
+
     def exit_program(self):
         self.close()
 
@@ -255,6 +258,16 @@ class AppsMenu(QtWidgets.QWidget):
         python_path = sys.executable
         subprocess.Popen([python_path] + sys.argv)
         QtWidgets.QApplication.quit()
+
+    def mousePressEvent(self, event):
+        if event.button() == QtCore.Qt.LeftButton:
+            self.drag_position = event.globalPos() - self.frameGeometry().topLeft()
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == QtCore.Qt.LeftButton and self.drag_position is not None:
+            self.move(event.globalPos() - self.drag_position)
+            event.accept()
 
 stylesheet = """
 QWidget {

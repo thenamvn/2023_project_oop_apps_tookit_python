@@ -13,6 +13,8 @@ class GhiChuGUI(QWidget):
         super().__init__()
         pygame.mixer.init()
         self.setWindowFlag(Qt.FramelessWindowHint)
+        self.drag_position = None
+        self.setMouseTracking(True)
         self.displayed_events = set()  # Danh sách các sự kiện đã hiển thị thông báo
         self.current_dir = os.path.dirname(os.path.abspath(__file__))
         icon_path = os.path.join(self.current_dir, "resources/icon.png")
@@ -155,6 +157,16 @@ class GhiChuGUI(QWidget):
 
     def stop_sound(self):
         pygame.mixer.music.stop()
+
+    def mousePressEvent(self, event):
+        if event.button() == QtCore.Qt.LeftButton:
+            self.drag_position = event.globalPos() - self.frameGeometry().topLeft()
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == QtCore.Qt.LeftButton and self.drag_position is not None:
+            self.move(event.globalPos() - self.drag_position)
+            event.accept()
 style_sheet = """
 QWidget {
     background-color: #2b2b2b;
