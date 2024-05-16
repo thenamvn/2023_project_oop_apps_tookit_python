@@ -1,6 +1,6 @@
                                                       OOP Project
   
-  
+Up lại project do lỗi
 Includes:
 
 pip install PyQt5
